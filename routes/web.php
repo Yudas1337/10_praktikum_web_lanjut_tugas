@@ -19,6 +19,7 @@ Route::get('/', function () {
 });
 Route::prefix('mahasiswa')->group(function () {
     Route::get('nilai/{nim}', [MahasiswaController::class, 'viewKhs'])->name('mahasiswa.khs');
+    Route::get('cetak_khs/{nim}', [MahasiswaController::class, 'cetak_khs'])->name('mahasiswa.cetak_khs');
 });
 Route::resource('mahasiswa', MahasiswaController::class);
 Route::post('search', [MahasiswaController::class, 'searchMahasiswa'])->name('mahasiswa.search');

@@ -16,8 +16,8 @@
         </div>
     </div>
 
-    <div class="col-lg-12 d-flex align-item-center flex-row justify-content-between">
-        <table class="mt-4">
+    <div class="col-lg-12" style="d-flex flex-row justify-content-between">
+        <table class="mt-5 mr-auto" border="0" align="left">
             <thead>
                 <tr>
                     <td class="text-left">
@@ -45,9 +45,6 @@
                 </tr>
             </thead>
         </table>
-        <a style="width: 120px; height: 40px" href="{{ route('mahasiswa.cetak_khs', $data->nim) }}"
-            class="mt-4 btn btn-success float-right">Cetak
-            KHS</a>
     </div>
 
 

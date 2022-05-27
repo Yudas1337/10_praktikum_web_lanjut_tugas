@@ -6,6 +6,8 @@ use App\Http\Requests\MahasiswaRequest;
 use App\Models\Kelas;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class MahasiswaController extends Controller
 {
@@ -59,6 +61,12 @@ class MahasiswaController extends Controller
         $mahasiswa->nim     = $request->nim;
         $mahasiswa->nama    = $request->nama;
         $mahasiswa->jurusan = $request->jurusan;
+
+        if ($request->file('foto')) {
+            $image_name         = $request->file('foto')->store('images', 'public');
+            $mahasiswa->foto    = $image_name;
+        }
+
         $mahasiswa->save();
 
         $kelas = new Kelas;
@@ -115,6 +123,13 @@ class MahasiswaController extends Controller
         $mahasiswa->jurusan = $request->jurusan;
         $mahasiswa->save();
 
+        if ($request->file('foto')) {
+            if ($mahasiswa->foto && file_exists(storage_path('app/public/' . $mahasiswa->foto))) {
+                Storage::delete('public/' . $mahasiswa->foto);
+            }
+            $mahasiswa->foto    = $request->file('foto')->store('images', 'public');
+        }
+
         $kelas = new Kelas;
         $kelas->id = $request->kelas;
 
@@ -146,5 +161,12 @@ class MahasiswaController extends Controller
     {
         $data = Mahasiswa::where('nim', $nim)->with(['kelas', 'khs.mataKuliah'])->first();
         return view('mahasiswa.khs', compact('data'));
+    }
+
+    public function cetak_khs($nim)
+    {
+        $data = Mahasiswa::where('nim', $nim)->with(['kelas', 'khs.mataKuliah'])->first();
+        $pdf = PDF::loadview('mahasiswa.cetak_khs', compact('data'));
+        return $pdf->stream();
     }
 }

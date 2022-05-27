@@ -19,7 +19,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form method="post" action="{{ route('mahasiswa.store') }}" id="myForm">
+                    <form method="post" action="{{ route('mahasiswa.store') }}" id="myForm" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="Nim">Nim</label>
@@ -52,6 +52,10 @@
                         <div class="form-group">
                             <label for="Jurusan">Tanggal Lahir</label>
                             <input autocomplete="off" type="date" name="tanggal_lahir" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="Jurusan">Foto</label>
+                            <input type="file" name="foto" class="form-control">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
